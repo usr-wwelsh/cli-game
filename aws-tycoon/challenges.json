@@ -1,0 +1,739 @@
+{
+  "challenges": [
+    {
+      "name": "🔒 Security Group Configuration",
+      "description": "A security audit revealed an improperly configured security group!",
+      "question": "What is the BEST practice for configuring AWS Security Groups?",
+      "options": [
+        "Allow all inbound traffic (0.0.0.0/0) for convenience",
+        "Use the principle of least privilege - only allow necessary ports",
+        "Only configure outbound rules, ignore inbound",
+        "Disable security groups to improve performance"
+      ],
+      "correct_answer": 1,
+      "explanation": "Security groups should follow the principle of least privilege - only allow the minimum necessary access. Opening all ports (0.0.0.0/0) creates security vulnerabilities.",
+      "difficulty": "easy",
+      "category": "security"
+    },
+    {
+      "name": "🔐 IAM Best Practices",
+      "description": "Your IAM policies need review for security compliance!",
+      "question": "Which IAM best practice is MOST important for production environments?",
+      "options": [
+        "Share root account credentials with the team",
+        "Use access keys for all authentication",
+        "Enable Multi-Factor Authentication (MFA) for privileged users",
+        "Grant administrator access to all developers"
+      ],
+      "correct_answer": 2,
+      "explanation": "MFA adds an extra layer of security and is critical for privileged accounts. Root credentials should never be shared, and admin access should be limited.",
+      "difficulty": "easy",
+      "category": "security"
+    },
+    {
+      "name": "🔓 S3 Bucket Permissions",
+      "description": "An S3 bucket has potential security issues!",
+      "question": "How should you secure sensitive data in S3?",
+      "options": [
+        "Make all buckets public for easy access",
+        "Use bucket policies, ACLs, enable encryption at rest and in transit",
+        "Rely only on obscure bucket names",
+        "Disable all access controls"
+      ],
+      "correct_answer": 1,
+      "explanation": "S3 security requires multiple layers: bucket policies for access control, encryption at rest (SSE), encryption in transit (SSL/TLS), and proper ACL configuration.",
+      "difficulty": "medium",
+      "category": "security"
+    },
+    {
+      "name": "⚡ Database Performance",
+      "description": "Your RDS database is experiencing high latency!",
+      "question": "What is the BEST way to improve RDS read performance?",
+      "options": [
+        "Increase the instance size indefinitely",
+        "Implement Read Replicas for read-heavy workloads",
+        "Disable all indexes to speed up queries",
+        "Store everything in a single large table"
+      ],
+      "correct_answer": 1,
+      "explanation": "Read Replicas allow you to scale read operations horizontally by distributing queries across multiple database instances, significantly improving performance for read-heavy applications.",
+      "difficulty": "medium",
+      "category": "performance"
+    },
+    {
+      "name": "🚀 CDN Implementation",
+      "description": "Users are experiencing slow content delivery globally!",
+      "question": "What is the primary benefit of using CloudFront CDN?",
+      "options": [
+        "It makes your code run faster",
+        "It caches content at edge locations closer to users",
+        "It increases your server's CPU power",
+        "It replaces the need for S3"
+      ],
+      "correct_answer": 1,
+      "explanation": "CloudFront is a Content Delivery Network (CDN) that caches content at edge locations worldwide, reducing latency by serving content from locations closer to users.",
+      "difficulty": "easy",
+      "category": "performance"
+    },
+    {
+      "name": "⚙️ Auto Scaling Strategy",
+      "description": "Your application traffic is unpredictable!",
+      "question": "When should you use Auto Scaling for EC2 instances?",
+      "options": [
+        "Never, manual scaling is always better",
+        "Only during business hours",
+        "When traffic patterns are variable and unpredictable",
+        "Only for development environments"
+      ],
+      "correct_answer": 2,
+      "explanation": "Auto Scaling automatically adjusts capacity based on demand, making it ideal for variable traffic patterns. It ensures availability during spikes while reducing costs during low usage.",
+      "difficulty": "easy",
+      "category": "performance"
+    },
+    {
+      "name": "💰 Cost Optimization",
+      "description": "Your AWS bill is higher than expected!",
+      "question": "Which strategy BEST reduces EC2 costs for non-critical workloads?",
+      "options": [
+        "Use only On-Demand instances for everything",
+        "Use Spot Instances for fault-tolerant, flexible workloads",
+        "Run instances 24/7 regardless of usage",
+        "Use the most expensive instance types"
+      ],
+      "correct_answer": 1,
+      "explanation": "Spot Instances can save up to 90% compared to On-Demand pricing, making them ideal for fault-tolerant workloads like batch processing, data analysis, and testing environments.",
+      "difficulty": "medium",
+      "category": "cost"
+    },
+    {
+      "name": "💵 Reserved Instances",
+      "description": "Planning long-term infrastructure costs!",
+      "question": "When should you purchase Reserved Instances?",
+      "options": [
+        "For unpredictable, sporadic workloads",
+        "For steady-state workloads with predictable usage",
+        "Never, they're always more expensive",
+        "Only for testing environments"
+      ],
+      "correct_answer": 1,
+      "explanation": "Reserved Instances offer significant discounts (up to 75%) for committing to 1 or 3 years of usage, making them cost-effective for steady-state, predictable workloads.",
+      "difficulty": "easy",
+      "category": "cost"
+    },
+    {
+      "name": "🏗️ High Availability Design",
+      "description": "Your application needs better reliability!",
+      "question": "How do you achieve high availability in AWS?",
+      "options": [
+        "Deploy everything in a single Availability Zone",
+        "Distribute resources across multiple Availability Zones",
+        "Use only one EC2 instance for simplicity",
+        "Avoid using load balancers"
+      ],
+      "correct_answer": 1,
+      "explanation": "High availability requires distributing resources across multiple Availability Zones. This protects against zone failures and ensures service continuity during outages.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "🔄 Load Balancer Selection",
+      "description": "Choosing the right load balancer for your application!",
+      "question": "When should you use an Application Load Balancer (ALB) vs Network Load Balancer (NLB)?",
+      "options": [
+        "Always use NLB for better performance",
+        "Use ALB for HTTP/HTTPS traffic with advanced routing; NLB for TCP/UDP",
+        "They are identical, choose randomly",
+        "Never use load balancers"
+      ],
+      "correct_answer": 1,
+      "explanation": "ALB operates at Layer 7 (application layer) and is best for HTTP/HTTPS with features like path-based routing. NLB operates at Layer 4 (transport layer) for TCP/UDP traffic requiring ultra-low latency.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "📦 Container Orchestration",
+      "description": "Your microservices need better management!",
+      "question": "What is the primary benefit of using ECS or EKS?",
+      "options": [
+        "It makes containers unnecessary",
+        "Automated deployment, scaling, and management of containerized applications",
+        "It replaces the need for EC2",
+        "It only works for small applications"
+      ],
+      "correct_answer": 1,
+      "explanation": "ECS (Elastic Container Service) and EKS (Elastic Kubernetes Service) automate container orchestration, handling deployment, scaling, load balancing, and service discovery for microservices.",
+      "difficulty": "hard",
+      "category": "architecture"
+    },
+    {
+      "name": "🔧 Terraform State Management",
+      "description": "Managing Terraform state for team collaboration!",
+      "question": "What is the BEST practice for storing Terraform state in a team environment?",
+      "options": [
+        "Store state files in Git repository",
+        "Use remote backend (like S3) with state locking (DynamoDB)",
+        "Keep state files on your local machine",
+        "Delete state files after each apply"
+      ],
+      "correct_answer": 1,
+      "explanation": "Remote state backend (S3) with state locking (DynamoDB) prevents conflicts, enables collaboration, and provides backup. Never store state in Git (contains sensitive data) or delete it.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "🛡️ DDoS Protection",
+      "description": "Your infrastructure is under threat of DDoS attacks!",
+      "question": "Which AWS service provides DDoS protection?",
+      "options": [
+        "AWS WAF only",
+        "AWS Shield (Standard and Advanced)",
+        "Security Groups",
+        "CloudWatch"
+      ],
+      "correct_answer": 1,
+      "explanation": "AWS Shield provides DDoS protection. Shield Standard is free and automatic. Shield Advanced offers enhanced protection and 24/7 DDoS response team support.",
+      "difficulty": "medium",
+      "category": "security"
+    },
+    {
+      "name": "📊 Monitoring and Logging",
+      "description": "Need better visibility into your infrastructure!",
+      "question": "What is the difference between CloudWatch and CloudTrail?",
+      "options": [
+        "They are identical services",
+        "CloudWatch monitors resources; CloudTrail logs API calls and user activity",
+        "CloudTrail only works with EC2",
+        "CloudWatch is only for billing"
+      ],
+      "correct_answer": 1,
+      "explanation": "CloudWatch monitors performance metrics and sets alarms. CloudTrail logs all API calls for security auditing and compliance. Both are essential for different aspects of monitoring.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "🔄 Backup and Disaster Recovery",
+      "description": "Planning for disaster recovery scenarios!",
+      "question": "What is the difference between RTO and RPO in disaster recovery?",
+      "options": [
+        "They mean the same thing",
+        "RTO = Recovery Time Objective (downtime); RPO = Recovery Point Objective (data loss)",
+        "RTO is for databases only",
+        "RPO doesn't matter in cloud environments"
+      ],
+      "correct_answer": 1,
+      "explanation": "RTO defines maximum acceptable downtime. RPO defines maximum acceptable data loss. For example: RTO=4hrs means recovery within 4hrs; RPO=1hr means at most 1hr of data loss.",
+      "difficulty": "hard",
+      "category": "architecture"
+    },
+    {
+      "name": "🔑 SSH Key Management",
+      "description": "Managing access to EC2 instances securely!",
+      "question": "What is the BEST practice for managing SSH keys for EC2 instances?",
+      "options": [
+        "Share the same key pair across all team members",
+        "Use unique key pairs per user and rotate them regularly",
+        "Store private keys in the Git repository for team access",
+        "Use password authentication instead of keys"
+      ],
+      "correct_answer": 1,
+      "explanation": "Each user should have their own key pair for accountability. Regular rotation minimizes risk if keys are compromised. Never share keys or store private keys in version control.",
+      "difficulty": "easy",
+      "category": "security"
+    },
+    {
+      "name": "📡 VPC Network Design",
+      "description": "Designing a secure VPC architecture!",
+      "question": "What is the purpose of using public and private subnets in a VPC?",
+      "options": [
+        "There is no difference between public and private subnets",
+        "Public subnets for internet-facing resources; private subnets for backend services",
+        "Private subnets are cheaper than public subnets",
+        "Public subnets are only for static websites"
+      ],
+      "correct_answer": 1,
+      "explanation": "Public subnets have routes to Internet Gateways for resources that need internet access (like load balancers). Private subnets isolate backend services (databases, app servers) without direct internet exposure.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "⏱️ Lambda Cold Starts",
+      "description": "Your Lambda functions are experiencing latency issues!",
+      "question": "How can you minimize Lambda cold start times?",
+      "options": [
+        "Use the largest memory allocation possible",
+        "Use Provisioned Concurrency for critical functions",
+        "Run Lambda functions continuously 24/7",
+        "Cold starts cannot be reduced"
+      ],
+      "correct_answer": 1,
+      "explanation": "Provisioned Concurrency keeps functions initialized and ready to respond immediately. Other strategies include optimizing package size, using compiled languages, and keeping functions warm strategically.",
+      "difficulty": "medium",
+      "category": "performance"
+    },
+    {
+      "name": "💾 Database Backup Strategy",
+      "description": "Implementing a robust backup strategy for RDS!",
+      "question": "What is the BEST backup strategy for production RDS databases?",
+      "options": [
+        "Rely only on RDS automated backups (retention: 1 day)",
+        "Use automated backups with appropriate retention + manual snapshots before major changes",
+        "No backups needed - AWS handles everything",
+        "Only take backups when you remember to"
+      ],
+      "correct_answer": 1,
+      "explanation": "Combine automated daily backups (7-35 day retention) with manual snapshots before major changes. Automated backups enable point-in-time recovery, while manual snapshots provide long-term recovery points.",
+      "difficulty": "easy",
+      "category": "architecture"
+    },
+    {
+      "name": "🌍 Multi-Region Deployment",
+      "description": "Planning for global application deployment!",
+      "question": "Why would you deploy your application across multiple AWS regions?",
+      "options": [
+        "To increase costs and complexity",
+        "For disaster recovery, lower latency for global users, and compliance requirements",
+        "AWS requires multi-region deployment",
+        "Single region is always better"
+      ],
+      "correct_answer": 1,
+      "explanation": "Multi-region deployment provides disaster recovery (region failure protection), reduces latency for global users by serving from nearby regions, and meets data residency/compliance requirements.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "🔍 CloudWatch Alarms",
+      "description": "Setting up effective monitoring and alerting!",
+      "question": "What metrics should you monitor with CloudWatch alarms for EC2 instances?",
+      "options": [
+        "Only CPU utilization",
+        "CPU, memory, disk I/O, network, and application-specific metrics",
+        "No monitoring needed if using Auto Scaling",
+        "Only monitor during business hours"
+      ],
+      "correct_answer": 1,
+      "explanation": "Comprehensive monitoring includes CPU, memory (requires CloudWatch agent), disk I/O, network throughput, status checks, and custom application metrics. Multiple alarms provide early warning of issues.",
+      "difficulty": "easy",
+      "category": "architecture"
+    },
+    {
+      "name": "🔐 Secrets Management",
+      "description": "Handling sensitive credentials securely!",
+      "question": "How should you store database passwords and API keys in AWS?",
+      "options": [
+        "Hardcode them in application code",
+        "Use AWS Secrets Manager or Parameter Store with encryption",
+        "Store them in environment variables in plain text",
+        "Keep them in a text file on S3"
+      ],
+      "correct_answer": 1,
+      "explanation": "AWS Secrets Manager and Systems Manager Parameter Store provide encrypted storage, automatic rotation, and audit trails. Never hardcode secrets or store them unencrypted.",
+      "difficulty": "easy",
+      "category": "security"
+    },
+    {
+      "name": "📈 Elastic Beanstalk vs ECS",
+      "description": "Choosing the right deployment platform!",
+      "question": "When should you use Elastic Beanstalk instead of ECS?",
+      "options": [
+        "Elastic Beanstalk is always better than ECS",
+        "For simple applications with minimal configuration; ECS for complex microservices",
+        "ECS is deprecated, always use Beanstalk",
+        "They are exactly the same service"
+      ],
+      "correct_answer": 1,
+      "explanation": "Elastic Beanstalk abstracts infrastructure management for simple deployments. ECS provides more control and flexibility for containerized microservices architectures with complex requirements.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "🗂️ S3 Storage Classes",
+      "description": "Optimizing storage costs in S3!",
+      "question": "Which S3 storage class is BEST for infrequently accessed data with millisecond retrieval?",
+      "options": [
+        "S3 Standard",
+        "S3 Standard-IA (Infrequent Access)",
+        "S3 Glacier Deep Archive",
+        "S3 One Zone-IA"
+      ],
+      "correct_answer": 1,
+      "explanation": "S3 Standard-IA offers lower storage costs than Standard, with millisecond access times, making it ideal for infrequent access. Glacier is for archival (minutes to hours retrieval), and One Zone-IA sacrifices redundancy.",
+      "difficulty": "medium",
+      "category": "cost"
+    },
+    {
+      "name": "🔄 API Gateway Throttling",
+      "description": "Protecting your backend services from overload!",
+      "question": "Why should you configure throttling on API Gateway?",
+      "options": [
+        "To make the API slower for all users",
+        "To protect backend services from being overwhelmed and control costs",
+        "Throttling is not necessary for APIs",
+        "To increase AWS bills"
+      ],
+      "correct_answer": 1,
+      "explanation": "Throttling prevents backend services from being overwhelmed by request spikes, protects against DDoS attacks, controls costs, and ensures fair usage across clients.",
+      "difficulty": "easy",
+      "category": "architecture"
+    },
+    {
+      "name": "🎯 Target Groups",
+      "description": "Configuring load balancer target groups!",
+      "question": "What is a target group in the context of AWS load balancers?",
+      "options": [
+        "A marketing segmentation tool",
+        "A logical grouping of targets (EC2, Lambda, IP) that receive traffic from load balancer",
+        "A security group for targets",
+        "An IAM group for users"
+      ],
+      "correct_answer": 1,
+      "explanation": "Target groups route requests to registered targets (EC2 instances, containers, Lambda functions, or IP addresses) based on configured health checks and routing rules.",
+      "difficulty": "easy",
+      "category": "architecture"
+    },
+    {
+      "name": "🔒 Encryption at Rest",
+      "description": "Implementing data encryption for compliance!",
+      "question": "Which AWS services support encryption at rest?",
+      "options": [
+        "Only S3 supports encryption",
+        "S3, EBS, RDS, DynamoDB, and most AWS storage services",
+        "Encryption at rest is not available in AWS",
+        "Only enterprise accounts can use encryption"
+      ],
+      "correct_answer": 1,
+      "explanation": "Most AWS storage services support encryption at rest using AWS KMS: S3, EBS volumes, RDS databases, DynamoDB tables, Redshift, and more. It's a best practice for sensitive data.",
+      "difficulty": "easy",
+      "category": "security"
+    },
+    {
+      "name": "⚡ ElastiCache Use Cases",
+      "description": "Improving application performance with caching!",
+      "question": "When should you use ElastiCache (Redis/Memcached)?",
+      "options": [
+        "Only for session storage",
+        "For caching database queries, session storage, real-time analytics, and leaderboards",
+        "ElastiCache is only for gaming applications",
+        "Never, databases are always faster"
+      ],
+      "correct_answer": 1,
+      "explanation": "ElastiCache accelerates applications by caching frequently accessed data, storing session information, powering real-time analytics, and maintaining leaderboards/counters with sub-millisecond latency.",
+      "difficulty": "medium",
+      "category": "performance"
+    },
+    {
+      "name": "🌐 Route 53 Routing Policies",
+      "description": "Configuring DNS routing for your application!",
+      "question": "Which Route 53 routing policy routes traffic based on endpoint health?",
+      "options": [
+        "Simple routing",
+        "Failover routing",
+        "Geolocation routing",
+        "Latency routing"
+      ],
+      "correct_answer": 1,
+      "explanation": "Failover routing monitors endpoint health and automatically routes to healthy endpoints. It's essential for high availability, directing traffic to standby resources when primary fails.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "💼 AWS Organizations",
+      "description": "Managing multiple AWS accounts efficiently!",
+      "question": "What is the primary benefit of using AWS Organizations?",
+      "options": [
+        "It makes AWS more expensive",
+        "Centralized billing, policy management, and resource sharing across multiple accounts",
+        "It's only for companies with 1000+ employees",
+        "Organizations are required for all AWS accounts"
+      ],
+      "correct_answer": 1,
+      "explanation": "AWS Organizations enables centralized billing (volume discounts), Service Control Policies (SCPs) for governance, resource sharing, and organizational structure for multiple accounts.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "🔧 Infrastructure as Code Benefits",
+      "description": "Understanding the value of IaC tools like Terraform!",
+      "question": "What is the PRIMARY benefit of using Infrastructure as Code?",
+      "options": [
+        "It makes infrastructure more expensive",
+        "Consistent, repeatable, version-controlled infrastructure deployments",
+        "IaC is only for large enterprises",
+        "Manual deployment is always better"
+      ],
+      "correct_answer": 1,
+      "explanation": "IaC treats infrastructure like software: version controlled, peer reviewed, tested, and repeatable. It eliminates manual errors, enables collaboration, and provides audit trails.",
+      "difficulty": "easy",
+      "category": "architecture"
+    },
+    {
+      "name": "🎨 Well-Architected Framework",
+      "description": "Following AWS best practices!",
+      "question": "What are the pillars of the AWS Well-Architected Framework?",
+      "options": [
+        "Only Cost Optimization",
+        "Operational Excellence, Security, Reliability, Performance, Cost Optimization, Sustainability",
+        "There are no official pillars",
+        "Only Security and Performance"
+      ],
+      "correct_answer": 1,
+      "explanation": "The six pillars provide best practices: Operational Excellence (run/monitor), Security (protect), Reliability (recover), Performance Efficiency (use resources), Cost Optimization (avoid waste), Sustainability (minimize environmental impact).",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "🔐 IAM Roles vs Users",
+      "description": "Understanding IAM identity types!",
+      "question": "When should you use IAM roles instead of IAM users?",
+      "options": [
+        "Never use roles, always use users",
+        "For applications, services, and temporary access; users for people",
+        "Roles and users are identical",
+        "Roles are only for administrators"
+      ],
+      "correct_answer": 1,
+      "explanation": "Use IAM roles for applications (EC2, Lambda), cross-account access, and temporary credentials. Use IAM users for individual people. Roles provide temporary credentials without long-term access keys.",
+      "difficulty": "easy",
+      "category": "security"
+    },
+    {
+      "name": "📊 Cost Allocation Tags",
+      "description": "Tracking and optimizing AWS costs!",
+      "question": "Why should you use cost allocation tags?",
+      "options": [
+        "Tags have no impact on billing",
+        "To track costs by project, team, environment, and optimize spending",
+        "Tags are only for organization, not billing",
+        "Cost allocation tags increase your AWS bill"
+      ],
+      "correct_answer": 1,
+      "explanation": "Cost allocation tags let you categorize and track AWS costs by project, department, environment, etc. This enables detailed cost reports and helps identify optimization opportunities.",
+      "difficulty": "easy",
+      "category": "cost"
+    },
+    {
+      "name": "🛠️ Systems Manager Session Manager",
+      "description": "Secure instance access without SSH keys!",
+      "question": "What is the advantage of using Session Manager over SSH?",
+      "options": [
+        "SSH is always more secure than Session Manager",
+        "No need for SSH keys, bastion hosts, or open inbound ports; full audit logging",
+        "Session Manager only works on Windows",
+        "SSH should always be used instead"
+      ],
+      "correct_answer": 1,
+      "explanation": "Session Manager provides secure shell access through AWS console/CLI without SSH keys, bastion hosts, or inbound security group rules. All sessions are logged for compliance and auditing.",
+      "difficulty": "medium",
+      "category": "security"
+    },
+    {
+      "name": "🌊 Data Transfer Costs",
+      "description": "Understanding and optimizing data transfer pricing!",
+      "question": "Which data transfer scenario typically incurs the HIGHEST cost?",
+      "options": [
+        "Data transfer within the same Availability Zone",
+        "Data transfer out to the internet",
+        "Data transfer between AWS services in the same region",
+        "All data transfer is free"
+      ],
+      "correct_answer": 1,
+      "explanation": "Data transfer OUT to the internet is typically most expensive. Transfer within same AZ is free, between AZs in same region has minimal cost, and CloudFront can reduce egress costs.",
+      "difficulty": "medium",
+      "category": "cost"
+    },
+    {
+      "name": "🔄 Blue/Green Deployments",
+      "description": "Implementing zero-downtime deployments!",
+      "question": "What is the purpose of blue/green deployment?",
+      "options": [
+        "To use blue and green colors in the UI",
+        "To enable zero-downtime deployments with instant rollback capability",
+        "It's a marketing strategy",
+        "Blue/green is only for testing"
+      ],
+      "correct_answer": 1,
+      "explanation": "Blue/green deployment maintains two identical environments. Deploy to green (inactive), test it, then switch traffic from blue to green. Instant rollback by switching back if issues arise.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "📝 CloudFormation vs Terraform",
+      "description": "Choosing the right IaC tool!",
+      "question": "What is a key difference between CloudFormation and Terraform?",
+      "options": [
+        "They are exactly the same",
+        "CloudFormation is AWS-only; Terraform supports multiple cloud providers",
+        "Terraform only works with AWS",
+        "CloudFormation is always better"
+      ],
+      "correct_answer": 1,
+      "explanation": "CloudFormation is AWS-native and deeply integrated with AWS services. Terraform is cloud-agnostic, supporting AWS, Azure, GCP, and more, making it ideal for multi-cloud strategies.",
+      "difficulty": "easy",
+      "category": "architecture"
+    },
+    {
+      "name": "🔒 VPC Security Best Practices",
+      "description": "Securing your VPC network!",
+      "question": "What is the purpose of a NAT Gateway in a VPC?",
+      "options": [
+        "To allow inbound internet traffic to private subnets",
+        "To allow private subnet resources to access internet while staying private",
+        "NAT Gateways are unnecessary",
+        "To replace security groups"
+      ],
+      "correct_answer": 1,
+      "explanation": "NAT Gateway enables resources in private subnets to initiate outbound connections to the internet (for updates, API calls) while preventing inbound connections from the internet.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "⚙️ EC2 Instance Types",
+      "description": "Selecting the right instance type for your workload!",
+      "question": "Which EC2 instance family is optimized for memory-intensive applications?",
+      "options": [
+        "T-series (t3, t4g)",
+        "R-series (r5, r6)",
+        "C-series (c5, c6)",
+        "I-series (i3, i4)"
+      ],
+      "correct_answer": 1,
+      "explanation": "R-series instances are memory-optimized for databases, caching, and real-time big data. C-series is compute-optimized, T-series is burstable, and I-series is storage-optimized.",
+      "difficulty": "medium",
+      "category": "performance"
+    },
+    {
+      "name": "🎯 Lambda Best Practices",
+      "description": "Optimizing serverless functions!",
+      "question": "What is a Lambda best practice for production?",
+      "options": [
+        "Put all code in a single massive Lambda function",
+        "Keep functions small, single-purpose, and use environment variables for config",
+        "Never use environment variables",
+        "Always use maximum timeout (15 minutes)"
+      ],
+      "correct_answer": 1,
+      "explanation": "Follow single responsibility principle, use environment variables for configuration, set appropriate timeouts/memory, handle errors gracefully, and use Lambda Layers for shared code.",
+      "difficulty": "easy",
+      "category": "architecture"
+    },
+    {
+      "name": "💳 AWS Free Tier",
+      "description": "Understanding AWS Free Tier limits!",
+      "question": "Which statement about AWS Free Tier is TRUE?",
+      "options": [
+        "Everything in AWS is always free",
+        "Some services offer always-free tier, 12-month free tier, or trial periods",
+        "Free Tier is only for students",
+        "You must pay after 1 month regardless of usage"
+      ],
+      "correct_answer": 1,
+      "explanation": "AWS Free Tier has three types: Always Free (Lambda 1M requests/month), 12 Months Free (750hrs t2.micro EC2), and Trials (limited time). Exceeding limits incurs charges.",
+      "difficulty": "easy",
+      "category": "cost"
+    },
+    {
+      "name": "🔐 KMS Key Management",
+      "description": "Managing encryption keys securely!",
+      "question": "What is AWS KMS (Key Management Service) used for?",
+      "options": [
+        "Managing EC2 instance keys only",
+        "Creating and controlling encryption keys for AWS services and applications",
+        "KMS is only for CloudTrail",
+        "Managing user passwords"
+      ],
+      "correct_answer": 1,
+      "explanation": "KMS creates, manages, and controls cryptographic keys used across AWS services and your applications. It provides centralized key management with audit trails via CloudTrail.",
+      "difficulty": "easy",
+      "category": "security"
+    },
+    {
+      "name": "🚀 Global Accelerator",
+      "description": "Improving global application performance!",
+      "question": "How does AWS Global Accelerator improve application performance?",
+      "options": [
+        "It makes your code run faster",
+        "Uses AWS global network to route traffic to optimal endpoints, reducing latency",
+        "It only works for static websites",
+        "Global Accelerator increases costs without benefits"
+      ],
+      "correct_answer": 1,
+      "explanation": "Global Accelerator uses AWS's global network infrastructure and edge locations to route user traffic to the optimal regional endpoint, reducing internet latency and improving availability.",
+      "difficulty": "hard",
+      "category": "performance"
+    },
+    {
+      "name": "📦 EBS Volume Types",
+      "description": "Choosing the right storage for EC2!",
+      "question": "Which EBS volume type provides the highest IOPS performance?",
+      "options": [
+        "gp2 (General Purpose SSD)",
+        "io2 Block Express (Provisioned IOPS SSD)",
+        "st1 (Throughput Optimized HDD)",
+        "sc1 (Cold HDD)"
+      ],
+      "correct_answer": 1,
+      "explanation": "io2 Block Express provides up to 256,000 IOPS for critical, I/O-intensive workloads. gp3/gp2 are general purpose, st1/sc1 are HDD for throughput-oriented or cold data.",
+      "difficulty": "medium",
+      "category": "performance"
+    },
+    {
+      "name": "🔍 AWS Config",
+      "description": "Maintaining compliance and configuration tracking!",
+      "question": "What does AWS Config do?",
+      "options": [
+        "Configures AWS resources automatically",
+        "Tracks resource configurations, changes, and compliance with rules over time",
+        "Replaces CloudFormation",
+        "Only monitors costs"
+      ],
+      "correct_answer": 1,
+      "explanation": "AWS Config continuously monitors and records AWS resource configurations, evaluates them against desired configurations (Config Rules), and maintains a history of changes for compliance auditing.",
+      "difficulty": "medium",
+      "category": "security"
+    },
+    {
+      "name": "🎪 Service Quotas",
+      "description": "Understanding AWS service limits!",
+      "question": "What should you do if you hit an AWS service quota/limit?",
+      "options": [
+        "Nothing, limits cannot be changed",
+        "Request a quota increase through Service Quotas console or AWS Support",
+        "Create a new AWS account",
+        "AWS will automatically increase limits"
+      ],
+      "correct_answer": 1,
+      "explanation": "Most AWS service quotas are soft limits that can be increased via Service Quotas console or support ticket. Plan ahead and request increases before hitting limits in production.",
+      "difficulty": "easy",
+      "category": "architecture"
+    },
+    {
+      "name": "🔄 RDS Multi-AZ",
+      "description": "Implementing database high availability!",
+      "question": "What is the purpose of RDS Multi-AZ deployment?",
+      "options": [
+        "To improve read performance",
+        "To provide automatic failover for high availability during outages",
+        "To reduce costs",
+        "Multi-AZ is only for backups"
+      ],
+      "correct_answer": 1,
+      "explanation": "Multi-AZ maintains a synchronous standby replica in another AZ. During failures, RDS automatically fails over to the standby (typically 60-120 seconds), providing high availability without data loss.",
+      "difficulty": "medium",
+      "category": "architecture"
+    },
+    {
+      "name": "💡 Savings Plans",
+      "description": "Optimizing long-term AWS costs!",
+      "question": "What is the difference between Savings Plans and Reserved Instances?",
+      "options": [
+        "They are identical",
+        "Savings Plans offer flexibility across instance families/regions; RIs are more specific",
+        "Savings Plans are always more expensive",
+        "Reserved Instances are deprecated"
+      ],
+      "correct_answer": 1,
+      "explanation": "Savings Plans provide flexibility to change instance families, sizes, OS, or regions while maintaining savings. RIs offer deeper discounts but less flexibility. Both require 1 or 3-year commitment.",
+      "difficulty": "hard",
+      "category": "cost"
+    }
+  ]
+}
