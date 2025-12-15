@@ -79,6 +79,7 @@ class GameState:
         self.money = 100.0
         self.total_revenue = 100.0
         self.last_update = time.time()
+        self.last_income_update = time.time()  # Track when income was last calculated
         self.challenges = []
         self.challenge_streak = 0
         self.challenges_solved = 0
@@ -193,6 +194,13 @@ class GameState:
         """Attempt to purchase an asset."""
         cost = self.calculate_asset_cost(asset_id, count)
         if self.money >= cost:
+            # Apply any pending income at OLD rate before purchase
+            current_time = time.time()
+            dt = current_time - self.last_income_update
+            if dt > 0:
+                self.update_money(dt)
+                self.last_income_update = current_time
+
             self.money -= cost
             self.assets[asset_id] += count
             self.total_assets_purchased += count
@@ -788,8 +796,8 @@ def main():
     try:
         while True:
             current_time = time.time()
-            dt = current_time - last_time
-            last_time = current_time
+            dt = current_time - game_state.last_income_update
+            game_state.last_income_update = current_time
 
             # Update game state
             game_state.update_money(dt)
