@@ -17,7 +17,7 @@ class Game:
         self.track = Track()
         self.rider = None
         self.renderer = Renderer(stdscr)
-        self.mode = 'menu'  # menu, editor, playing
+        self.mode = 'menu'  # menu, editor, playing, load_menu
         self.running = True
         self.maps_dir = Path(__file__).parent / 'maps'
         self.maps_dir.mkdir(exist_ok=True)
@@ -26,6 +26,10 @@ class Game:
         self.editor_x = 40
         self.editor_y = 10
         self.paused = False
+
+        # Status message
+        self.status_message = ""
+        self.status_message_time = 0
 
         curses.curs_set(0)
         curses.use_default_colors()
@@ -39,6 +43,8 @@ class Game:
 
             if self.mode == 'menu':
                 self.menu_screen()
+            elif self.mode == 'load_menu':
+                self.load_menu_screen()
             elif self.mode == 'editor':
                 self.editor_screen()
             elif self.mode == 'playing':
@@ -87,12 +93,52 @@ class Game:
                 self.stdscr.addstr(8 + i, width // 2 - len(item) // 2, item,
                                  self.renderer.COLOR_RIDER_SLOW)
 
+    def load_menu_screen(self):
+        """Track selection menu"""
+        height, width = self.stdscr.getmaxyx()
+
+        title = "╔═══ SELECT TRACK TO LOAD ═══╗"
+        self.stdscr.addstr(2, width // 2 - len(title) // 2, title,
+                         self.renderer.COLOR_MENU | curses.A_BOLD)
+
+        tracks = sorted(list(self.maps_dir.glob('*.json')), key=lambda p: p.stat().st_mtime, reverse=True)
+
+        if not tracks:
+            msg = "No saved tracks found!"
+            self.stdscr.addstr(6, width // 2 - len(msg) // 2, msg,
+                             self.renderer.COLOR_RIDER_FAST)
+            msg2 = "Press M to return to menu"
+            self.stdscr.addstr(8, width // 2 - len(msg2) // 2, msg2,
+                             self.renderer.COLOR_POINTS)
+        else:
+            for i, track_path in enumerate(tracks[:9]):  # Show up to 9 tracks
+                # Get file info
+                track_name = track_path.stem
+                mod_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(track_path.stat().st_mtime))
+
+                # Load track data to show info
+                try:
+                    with open(track_path, 'r') as f:
+                        data = json.load(f)
+                    point_count = len(data.get('points', []))
+                    line_count = len(data.get('lines', []))
+                    info = f"{i+1}. {track_name} - {point_count} points, {line_count} lines - {mod_time}"
+                except:
+                    info = f"{i+1}. {track_name} - {mod_time}"
+
+                self.stdscr.addstr(6 + i, 2, info[:width-3],
+                                 self.renderer.COLOR_RIDER_SLOW)
+
+            instructions = "Press 1-9 to load a track | M: back to menu"
+            self.stdscr.addstr(height - 2, width // 2 - len(instructions) // 2, instructions,
+                             self.renderer.COLOR_POINTS)
+
     def editor_screen(self):
         """Track editor"""
         height, width = self.stdscr.getmaxyx()
 
         # Instructions
-        instructions = "EDITOR | WASD: move cursor | SPACE: place/connect point | R: reset rider | P: play | S: save | M: menu"
+        instructions = "EDITOR | WASD: move cursor | SPACE: place/connect point | R: reset rider | P: play | Ctrl+S: save | M: menu"
         self.stdscr.addstr(0, 0, instructions[:width-1], self.renderer.COLOR_POINTS)
 
         # Render track
@@ -101,6 +147,11 @@ class Game:
 
         if self.rider:
             self.renderer.draw_rider(self.rider)
+
+        # Show status message if active (for 2 seconds)
+        if self.status_message and time.time() - self.status_message_time < 2.0:
+            self.stdscr.addstr(height - 1, 0, self.status_message[:width-1],
+                             self.renderer.COLOR_RIDER_SLOW | curses.A_BOLD)
 
     def playing_screen(self):
         """Playing mode with physics"""
@@ -154,6 +205,17 @@ class Game:
             elif key == ord('5'):
                 self.load_default_map('loop_de_loop')
 
+        elif self.mode == 'load_menu':
+            if key == ord('m') or key == ord('M'):
+                self.mode = 'menu'
+            elif ord('1') <= key <= ord('9'):
+                # Load the selected track
+                track_index = key - ord('1')
+                tracks = sorted(list(self.maps_dir.glob('*.json')),
+                              key=lambda p: p.stat().st_mtime, reverse=True)
+                if track_index < len(tracks):
+                    self.load_track(tracks[track_index])
+
         elif self.mode == 'editor':
             if key == ord('w'): self.editor_y = max(2, self.editor_y - 1)
             elif key == ord('s'): self.editor_y = min(self.stdscr.getmaxyx()[0] - 2, self.editor_y + 1)
@@ -172,7 +234,7 @@ class Game:
                         self.rider = Rider(start[0], start[1])
                         self.mode = 'playing'
                         self.paused = False
-            elif key == ord('s'):
+            elif key == 19:  # Ctrl+S
                 self.save_track()
             elif key == ord('m'):
                 self.mode = 'menu'
@@ -191,23 +253,40 @@ class Game:
 
     def save_track(self):
         """Save current track to file"""
-        filename = f"track_{int(time.time())}.json"
-        filepath = self.maps_dir / filename
+        try:
+            # Find the highest existing track number
+            existing_tracks = list(self.maps_dir.glob('track *.json'))
+            track_numbers = []
+            for track_path in existing_tracks:
+                try:
+                    # Extract number from "track N.json"
+                    num = int(track_path.stem.replace('track ', ''))
+                    track_numbers.append(num)
+                except ValueError:
+                    continue
 
-        data = {
-            'points': self.track.points,
-            'lines': self.track.lines
-        }
+            # Get next track number
+            next_num = max(track_numbers, default=0) + 1
+            filename = f"track {next_num}.json"
+            filepath = self.maps_dir / filename
 
-        with open(filepath, 'w') as f:
-            json.dump(data, f, indent=2)
+            data = {
+                'points': self.track.points,
+                'lines': self.track.lines
+            }
+
+            with open(filepath, 'w') as f:
+                json.dump(data, f, indent=2)
+
+            self.status_message = f"✓ Saved: {filename}"
+            self.status_message_time = time.time()
+        except Exception as e:
+            self.status_message = f"✗ Save failed: {str(e)}"
+            self.status_message_time = time.time()
 
     def load_track_menu(self):
-        """Show available tracks and load one"""
-        tracks = list(self.maps_dir.glob('*.json'))
-        if tracks:
-            # For now, just load the first one (can expand to selection menu)
-            self.load_track(tracks[0])
+        """Switch to track selection menu"""
+        self.mode = 'load_menu'
 
     def load_track(self, filepath):
         """Load track from file"""
